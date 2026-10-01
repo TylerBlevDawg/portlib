@@ -7,21 +7,29 @@ running=1
 while [[ $running -eq 1 ]];
 do
 
+# read can be done like read -r -p firstVar secondVar
+
 tte --no-color print --print-head-return-speed 7 --print-speed 7 << 'EOF'
 
 ========================================
     Porter's Terminal Effect Library
 ========================================
 
-To start enter a desired effect!
-To quit, most programs use q, if not Ctrl+C
+> To start enter a desired effect!
+> To quit, most programs use q, if not, Ctrl+C
+> Some effects have options, to see the options
+  type the effect then -o after! EX: fire -o
+========================================
 matrix - Runs a matrix effect
 fire - Runs a fire effect
 bs - Allows you to select from some cool fake effects
 hack - Runs a fake hacking program (Ctrl+C then exit to quit)
 inspire - inspiring
-dragonball - Plays the gogeta vs broly fight!
+flcl - Loops through flcl!
+dbz - Plays old dragon ball episodes!
+anime - Loops through random anime episodes!
 music - Plays music videos!
+amb - Plays ambient videos!
 command - Run a custom command
 exit - exits program
 EOF
