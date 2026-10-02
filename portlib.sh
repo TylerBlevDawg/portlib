@@ -101,7 +101,7 @@ elif [[ "$effect" = "exit" ]]; then
 elif [[ "$effect" = "inspire" ]]; then
     echo ""
     runCommand "fortune | cowsay | tte --no-color print --print-head-return-speed 7 --print-speed 7"
-elif [[ "$effect" = "amb"]]; then
+elif [[ "$effect" = "amb" ]]; then
     playMedia ./amb --loop-playlist --shuffle
 elif [[ "$effect" = "flcl" ]]; then
     playMedia ./flcl --loop-playlist
