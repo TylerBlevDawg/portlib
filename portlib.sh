@@ -26,8 +26,8 @@ playMedia(){
 
     read -r -p "Play for a specific time (y/n): " choice
     if [[ "$choice" = "y" ]]; then
-        read -r -p "Enter intended runtime (in minutes): " minutes
-        timeout "${minutes}m" mpv "$target" --fs=yes --vo=wlshm "${extra[@]}"
+        optiom
+        timeout "${playTime}m" mpv "$target" --fs=yes --vo=wlshm "${extra[@]}"
     else
         mpv "$target" --fs=yes --vo=wlshm "${extra[@]}"
     fi
