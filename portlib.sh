@@ -96,6 +96,3 @@ else
 fi
 
 done
-
-#Effects
-#gping, pipes, fortune + cowsay, asciiquarium
