@@ -5,7 +5,6 @@
 # cmatrix
 # aafire   
 # genact
-# hollywood
 # fortune
 # cowsay
 # mpv

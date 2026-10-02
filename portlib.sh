@@ -3,13 +3,41 @@
 clear
 
 running=1
+playTime=0
+
+option(){
+    read -r -p "Enter intended runtime (in minutes): " playTime
+}
+
+runCommand(){
+    local cmd="$1"
+    local option="$2"
+    if [[ $option -eq 1 ]]; then
+        option
+    fi
+    $cmd
+    clear
+}
+
+playMedia(){
+    local target="$1"; shift
+    local extra=("$@")
+    local choice minutes
+
+    read -r -p "Play for a specific time (y/n): " choice
+    if [[ "$choice" = "y" ]]; then
+        read -r -p "Enter intended runtime (in minutes): " minutes
+        timeout "${minutes}m" mpv "$target" --fs=yes --vo=wlshm "${extra[@]}"
+    else
+        mpv "$target" --fs=yes --vo=wlshm "${extra[@]}"
+    fi
+    clear
+}
 
 while [[ $running -eq 1 ]];
 do
 
-# read can be done like read -r -p firstVar secondVar
-
-tte --no-color print --print-head-return-speed 7 --print-speed 7 << 'EOF'
+tte --no-color print --print-head-return-speed 15 --print-speed 15 << 'EOF'
 
 ========================================
     Porter's Terminal Effect Library
@@ -23,23 +51,22 @@ tte --no-color print --print-head-return-speed 7 --print-speed 7 << 'EOF'
 matrix - Runs a matrix effect
 fire - Runs a fire effect
 bs - Allows you to select from some cool fake effects
-hack - Runs a fake hacking program (Ctrl+C then exit to quit)
 inspire - inspiring
+amb - Plays ambient videos!
 flcl - Loops through flcl!
 dbz - Plays old dragon ball episodes!
 anime - Loops through random anime episodes!
 music - Plays music videos!
-amb - Plays ambient videos!
 command - Run a custom command
 exit - exits program
 EOF
 
-read -r -p "Enter desired effect: " effect
+read -r -p "Enter desired effect: " effect option
 
 if [[ "$effect" = "matrix" ]]; then
-    cmatrix
+    runCommand cmatrix
 elif [[ "$effect" = "fire" ]]; then
-    aafire -driver slang -eight
+    runCommand "aafire -driver slang -eight"
 elif [[ "$effect" = "bs" ]]; then
     tte --no-color print --print-head-return-speed 7 --print-speed 7 << 'EOF'
 
@@ -63,8 +90,7 @@ EOF
     else 
         echo "Exiting program" | tte --no-color print
 fi
-elif [[ "$effect" = "hack" ]]; then
-    hollywood
+
 elif [[ "$effect" = "command" ]]; then
     read -r -p "Enter command: " command
     $command
@@ -74,25 +100,23 @@ elif [[ "$effect" = "exit" ]]; then
     running=0
 elif [[ "$effect" = "inspire" ]]; then
     echo ""
-    fortune | cowsay | tte --no-color print --print-head-return-speed 7 --print-speed 7
-elif [[ "$effect" = "dragonball" ]]; then
-    read -r -p "Play for a specific time (y/n): " mpvoption
-    if [[ "$mpvoption" = "y" ]]; then 
-        read -r -p "Enter desired time in seconds: " mpvPlayTime
-        mpv dbz.mp4 --fs=yes --vo=wlshm --end="$mpvPlayTime"
-        clear
-    elif [[ "$mpvoption" = "n" ]]; then 
-        mpv dbz.mp4 --fs=yes --vo=wlshm
-        clear
-    else
-        echo "Input not accepted" | tte --no-color print
-    fi
+    runCommand "fortune | cowsay | tte --no-color print --print-head-return-speed 7 --print-speed 7"
+elif [[ "$effect" = "amb"]]; then
+    playMedia ./amb --loop-playlist --shuffle
+elif [[ "$effect" = "flcl" ]]; then
+    playMedia ./flcl --loop-playlist
+elif [[ "$effect" = "dbz" ]]; then
+    playMedia. ./dbz --loop-playlist --shuffle
+elif [[ "$effect" = "anime" ]]; then
+    playMedia ./anime --loop-playlist --shuffle
 elif [[ "$effect" = "music" ]]; then
-    read -r -p "Enter desired time in minutes: " mpvPlayTime
-    timeout "$mpvPlayTime"m mpv ./musicvideos --fs=yes --vo=wlshm --loop-playlist --shuffle
-    clear
+    playMedia ./musicvideos --loop-playlist --shuffle
 else 
-    echo "command not accepted"
+    echo ""
+    echo "command not accepted" | tte --no-color print
+    sleep 1
 fi
+
+clear
 
 done
