@@ -52,6 +52,7 @@ matrix - Runs a matrix effect
 fire - Runs a fire effect
 bs - Allows you to select from some cool fake effects
 inspire - inspiring
+yogurt - Unlock your inner potential
 amb - Plays ambient videos!
 flcl - Loops through flcl!
 dbz - Plays old dragon ball episodes!
@@ -111,6 +112,8 @@ elif [[ "$effect" = "anime" ]]; then
     playMedia ./anime --loop-playlist --shuffle
 elif [[ "$effect" = "music" ]]; then
     playMedia ./musicvideos --loop-playlist --shuffle
+elif [[ "$effect" = "yogurt" ]]; then
+    playMedia ./yogurt --loop-playlist
 else 
     echo ""
     echo "command not accepted" | tte --no-color print
